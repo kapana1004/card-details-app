@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Cardcomponent from "./components/Cardcomponent";
+import Complete from "./components/Complete";
+
 // import bgmobileImage from "./assets/bg-main-mobile.png";
-import cardBackimage from "./assets/bg-card-back.png";
-import carFrontimage from "./assets/bg-card-front.png";
-import cardLogoImage from "./assets/card-logo.svg";
 
 function formatCardNumber(value) {
   const cleanedValue = value.replace(/\D/g, "");
@@ -57,6 +57,7 @@ function App() {
   const [month, setMonth] = useState("00");
   const [year, setYear] = useState("00");
   const [cvv, setCvv] = useState("000");
+  const [complete, setComplete] = useState(false);
   const {
     register,
     handleSubmit,
@@ -95,48 +96,20 @@ function App() {
     setMonth(cardMonth);
     setYear(cardYear);
     setCvv(cardCvv);
+    setComplete(true);
   };
 
   return (
     <div className=" flex justify-center items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] ">
-      <div className=" flex relative w-[375px] h-[240px] bg-[url('/Users/mac/interactive-card/src/assets/bg-main-mobile.png')]">
-        {/* <img src={bgmobileImage} alt="" /> */}
+      <Cardcomponent
+        cardFrontNum={cardFrontNum}
+        holderName={holderName}
+        month={month}
+        year={year}
+        cvv={cvv}
+      />
+      <Complete complete={complete} />
 
-        <div className=" w-[20px] h-[11px] absolute top-[40%] z-50 left-[78%] pl-[2px] text-white text-[9px] ">
-          {cvv}
-        </div>
-        <img
-          className=" w-[287px] h-[157px] absolute top-[10%] left-[18%]"
-          src={cardBackimage}
-          alt="cardback"
-        />
-        {/* <img
-          className=" absolute top-[47%] left-[6%] w-[287px] h-[157px]"
-          src={carFrontimage}
-          alt="cardfront"
-        /> */}
-        <div
-          className=" absolute top-[47%] left-[6%] w-[287px] h-[157px] 
-        bg-[url('/Users/mac/interactive-card/src/assets/bg-card-front.png')]
-        pt-[84px] pl-[19px] rounded-[6px] "
-        >
-          <span className=" text-[18px] text-white tracking-[2.2px] ">
-            {cardFrontNum}{" "}
-          </span>
-          <div className=" flex flex-row pt-[10px] justify-between pr-[25px]">
-            {" "}
-            <span className=" text-white text-[9px]">{holderName}</span>
-            <span className=" text-white text-[9px]">
-              {month}/{year}
-            </span>
-          </div>
-        </div>
-        <img
-          className=" absolute top-[53%] left-[10%] w-[54px] h-[30px]"
-          src={cardLogoImage}
-          alt="logo"
-        />
-      </div>
       <div className=" bg-white w-[375px] h-[704px] pl-[20px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
