@@ -58,6 +58,7 @@ function App() {
   const [year, setYear] = useState("00");
   const [cvv, setCvv] = useState("000");
   const [complete, setComplete] = useState(false);
+  const [hideDetails, setHideDetals] = useState(false);
   const {
     register,
     handleSubmit,
@@ -80,6 +81,11 @@ function App() {
     setValue("cardMonth", formatCardMonth(event.target.value));
   };
   const onSubmit = (data) => {
+    if (Object.keys(errors).length === 0) {
+      // If no errors, setComplete to true
+      setComplete(true);
+      setHideDetals(true);
+    }
     console.log(data);
   };
   const cardYear = watch("cardYear", "");
@@ -96,7 +102,7 @@ function App() {
     setMonth(cardMonth);
     setYear(cardYear);
     setCvv(cardCvv);
-    setComplete(true);
+    // setComplete(true);
   };
 
   return (
@@ -108,9 +114,13 @@ function App() {
         year={year}
         cvv={cvv}
       />
-      <Complete complete={complete} />
+      {complete ? <Complete complete={complete} errors={errors} /> : null}
 
-      <div className=" bg-white w-[375px] h-[704px] pl-[20px]">
+      <div
+        className={
+          hideDetails ? " hidden" : ` bg-white w-[375px] h-[704px] pl-[20px]`
+        }
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="nameOnCard" className="form-label flex flex-col">

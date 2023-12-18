@@ -3,11 +3,10 @@ import pathImage from "../assets/Path.png";
 
 export default function Complete({ complete }) {
   const handleRefresh = () => {
-    // Reload the window
     window.location.reload();
   };
   return (
-    <div className={`${complete ? "flex flex-col items-center" : "hidden"}  `}>
+    <div className="flex flex-col items-center">
       {" "}
       <div
         className=" w-[80px] h-[80px] rounded-full bg-violet-600 
