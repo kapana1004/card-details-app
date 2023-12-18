@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import bgmobileImage from "../public/assets/bg-main-mobile.png";
-import cardBackimage from "../public/assets/bg-card-back.png";
-import carFrontimage from "../public/assets/bg-card-front.png";
-import cardLogoImage from "../public/assets/card-logo.svg";
+// import bgmobileImage from "./assets/bg-main-mobile.png";
+import cardBackimage from "./assets/bg-card-back.png";
+import carFrontimage from "./assets/bg-card-front.png";
+import cardLogoImage from "./assets/card-logo.svg";
 
 function formatCardNumber(value) {
   const cleanedValue = value.replace(/\D/g, "");
@@ -45,8 +45,15 @@ function formatCardYear(value) {
   return formattedYearValue;
 }
 
+function formatCvv(value) {
+  const cleanedCvvValue = value.replace(/\D/g, "");
+  const formatedCvv = cleanedCvvValue.slice(0, 4).trim();
+  return formatedCvv;
+}
+
 function App() {
-  const [details, setDetails] = useState(false);
+  const [cardFrontNum, setCardFontNum] = useState("0000  0000  0000  0000");
+  const [holderName, setholderName] = useState("card holder");
   const {
     register,
     handleSubmit,
@@ -59,6 +66,11 @@ function App() {
     const formattedValue = formatCardNumber(event.target.value);
     setValue("cardNumber", formattedValue);
   };
+  const cardHolder = watch("cardHolder", "");
+  const handleCardHolder = (event) => {
+    setValue("cardHolder", event.target.value);
+  };
+
   const cardMonth = watch("cardMonth", "");
   const handlCardMonth = (event) => {
     setValue("cardMonth", formatCardMonth(event.target.value));
@@ -70,21 +82,40 @@ function App() {
   const handleCardYear = (event) => {
     setValue("cardYear", formatCardYear(event.target.value));
   };
+  const cardCvv = watch("cardCvv", "");
+  const handleCardCvv = (event) => {
+    setValue("cardCvv", formatCvv(event.target.value));
+  };
+  const cardNumbeHandling = () => {
+    setCardFontNum(cardNumber);
+    setholderName(cardHolder);
+  };
 
   return (
     <div className=" flex justify-center items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] ">
-      <div className=" flex relative">
-        <img src={bgmobileImage} alt="" />
+      <div className=" flex relative w-[375px] h-[240px] bg-[url('/Users/mac/interactive-card/src/assets/bg-main-mobile.png')]">
+        {/* <img src={bgmobileImage} alt="" /> */}
         <img
           className=" w-[287px] h-[157px] absolute top-[10%] left-[18%]"
           src={cardBackimage}
           alt="cardback"
         />
-        <img
+        {/* <img
           className=" absolute top-[47%] left-[6%] w-[287px] h-[157px]"
           src={carFrontimage}
           alt="cardfront"
-        />
+        /> */}
+        <div
+          className=" absolute top-[47%] left-[6%] w-[287px] h-[157px] 
+        bg-[url('/Users/mac/interactive-card/src/assets/bg-card-front.png')]
+        pt-[84px] pl-[19px] "
+        >
+          <span className=" text-[18px] text-white">{cardFrontNum} </span>
+          <div>
+            {" "}
+            <span>{holderName}</span>
+          </div>
+        </div>
         <img
           className=" absolute top-[53%] left-[10%] w-[54px] h-[30px]"
           src={cardLogoImage}
@@ -99,14 +130,20 @@ function App() {
               <input
                 id="nameOnCard"
                 type="text"
-                className="form-control pl-[15px] w-[327px] h-[45px] rounded-lg border-[0.5px] border-zinc-400 mt-[10px]"
+                placeholder="e.g. Jane Appleseed"
+                className={`form-control pl-[15px] w-[327px] h-[45px] rounded-lg border-[0.5px] border-zinc-400 mt-[10px]
+                ${errors.nameOnCard && " border-[#FF5050]"}`}
                 {...register("nameOnCard", {
                   required: "Name on card is required",
                 })}
+                value={cardHolder}
+                onSubmit={handleCardHolder}
               />
             </label>
             {errors.nameOnCard && (
-              <p className="text-danger">{errors.nameOnCard.message}</p>
+              <p className="text-danger text-[#FF5050]">
+                {errors.nameOnCard.message}
+              </p>
             )}
           </div>
           <div className="mb-3">
@@ -116,7 +153,9 @@ function App() {
             <input
               id="cardNumber"
               type="text"
-              className="form-control pl-[15px] w-[327px] h-[45px] rounded-lg border-[0.5px] border-zinc-400 mt-[10px]"
+              placeholder="e.g. 1234 5678 9123 0000"
+              className={`form-control pl-[15px] w-[327px] h-[45px] rounded-lg border-[0.5px] border-zinc-400 mt-[10px]
+              ${errors.nameOnCard && " border-[#FF5050]"}`}
               {...register("cardNumber", {
                 required: "Card number is required",
               })}
@@ -124,7 +163,9 @@ function App() {
               onInput={handleCardNumberChange}
             />
             {errors.cardNumber && (
-              <p className="text-danger">{errors.cardNumber.message}</p>
+              <p className="text-danger text-[#FF5050]">
+                {errors.cardNumber.message}
+              </p>
             )}
           </div>
           <div className="mb-3 flex flex-row">
@@ -132,10 +173,11 @@ function App() {
               EXP. DATE (MM/YY)
               <div className=" flex flex-row gap-[10px]">
                 <input
-                  id="expiryDate"
+                  id="expiryMonth"
                   type="text"
                   placeholder="MM"
-                  className=" mt-[10px] pl-[20px] form-control border-[0.5px] border-slate-500 w-[72px] h-[45px] rounded-lg"
+                  className={`mt-[10px] pl-[20px] form-control border-[0.5px] border-slate-500 w-[72px] h-[45px] rounded-lg
+                  ${errors.expiryDate && " border-[#FF5050]"}`}
                   {...register("expiryDate", {
                     required: "Can’t be blank",
                   })}
@@ -143,10 +185,11 @@ function App() {
                   onInput={handlCardMonth}
                 />
                 <input
-                  id="expiryDate"
+                  id="expiryYear"
                   type="text"
                   placeholder="YY"
-                  className=" mt-[10px]  pl-[20px] form-control border-[0.5px] border-slate-500 w-[72px] h-[45px] rounded-lg"
+                  className={`mt-[10px]  pl-[20px] form-control border-[0.5px] border-slate-500 w-[72px] h-[45px] rounded-lg
+                  ${errors.expiryDate && " border-[#FF5050]"}`}
                   {...register("expiryDate", {
                     required: "Can’t be blank",
                   })}
@@ -155,7 +198,9 @@ function App() {
                 />
               </div>
               {errors.expiryDate && (
-                <p className="text-danger">{errors.expiryDate.message}</p>
+                <p className="text-danger text-[#FF5050] ">
+                  {errors.expiryDate.message}
+                </p>
               )}
             </label>
             <label htmlFor="cvv" className="form-label flex flex-col">
@@ -164,16 +209,22 @@ function App() {
                 id="cvv"
                 type="text"
                 placeholder="e.g. 123"
-                className=" mt-[10px] pl-[50px] form-control w-[164px] h-[45px] rounded-lg border-[0.5px] border-zinc-400 ml-[10px]"
+                className={`mt-[10px] pl-[50px] form-control w-[164px] h-[45px] rounded-lg border-[0.5px] border-zinc-400 ml-[10px]
+                ${errors.cvv && " border-[#FF5050]"}`}
                 {...register("cvv", { required: "Can’t be blank" })}
+                value={cardCvv}
+                onInput={handleCardCvv}
               />
               {errors.cvv && (
-                <p className="text-danger">{errors.cvv.message}</p>
+                <p className="text-danger  text-[#FF5050] pl-[10px]">
+                  {errors.cvv.message}
+                </p>
               )}
             </label>
           </div>
           <div className="mb-3"></div>
           <button
+            onClick={cardNumbeHandling}
             type="submit"
             className=" bg-[#21092F] rounded-lg w-[327px] h-[53px] text-white"
           >
