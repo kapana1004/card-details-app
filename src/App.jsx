@@ -54,6 +54,9 @@ function formatCvv(value) {
 function App() {
   const [cardFrontNum, setCardFontNum] = useState("0000  0000  0000  0000");
   const [holderName, setholderName] = useState("card holder");
+  const [month, setMonth] = useState("00");
+  const [year, setYear] = useState("00");
+  const [cvv, setCvv] = useState("000");
   const {
     register,
     handleSubmit,
@@ -89,12 +92,19 @@ function App() {
   const cardNumbeHandling = () => {
     setCardFontNum(cardNumber);
     setholderName(cardHolder);
+    setMonth(cardMonth);
+    setYear(cardYear);
+    setCvv(cardCvv);
   };
 
   return (
     <div className=" flex justify-center items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] ">
       <div className=" flex relative w-[375px] h-[240px] bg-[url('/Users/mac/interactive-card/src/assets/bg-main-mobile.png')]">
         {/* <img src={bgmobileImage} alt="" /> */}
+
+        <div className=" w-[20px] h-[11px] absolute top-[40%] z-50 left-[78%] pl-[2px] text-white text-[9px] ">
+          {cvv}
+        </div>
         <img
           className=" w-[287px] h-[157px] absolute top-[10%] left-[18%]"
           src={cardBackimage}
@@ -108,12 +118,17 @@ function App() {
         <div
           className=" absolute top-[47%] left-[6%] w-[287px] h-[157px] 
         bg-[url('/Users/mac/interactive-card/src/assets/bg-card-front.png')]
-        pt-[84px] pl-[19px] "
+        pt-[84px] pl-[19px] rounded-[6px] "
         >
-          <span className=" text-[18px] text-white">{cardFrontNum} </span>
-          <div>
+          <span className=" text-[18px] text-white tracking-[2.2px] ">
+            {cardFrontNum}{" "}
+          </span>
+          <div className=" flex flex-row pt-[10px] justify-between pr-[25px]">
             {" "}
-            <span>{holderName}</span>
+            <span className=" text-white text-[9px]">{holderName}</span>
+            <span className=" text-white text-[9px]">
+              {month}/{year}
+            </span>
           </div>
         </div>
         <img
@@ -137,7 +152,7 @@ function App() {
                   required: "Name on card is required",
                 })}
                 value={cardHolder}
-                onSubmit={handleCardHolder}
+                onChange={handleCardHolder}
               />
             </label>
             {errors.nameOnCard && (
@@ -178,7 +193,7 @@ function App() {
                   placeholder="MM"
                   className={`mt-[10px] pl-[20px] form-control border-[0.5px] border-slate-500 w-[72px] h-[45px] rounded-lg
                   ${errors.expiryDate && " border-[#FF5050]"}`}
-                  {...register("expiryDate", {
+                  {...register("cardMonth", {
                     required: "Can’t be blank",
                   })}
                   value={cardMonth}
@@ -190,7 +205,7 @@ function App() {
                   placeholder="YY"
                   className={`mt-[10px]  pl-[20px] form-control border-[0.5px] border-slate-500 w-[72px] h-[45px] rounded-lg
                   ${errors.expiryDate && " border-[#FF5050]"}`}
-                  {...register("expiryDate", {
+                  {...register("cardYear", {
                     required: "Can’t be blank",
                   })}
                   value={cardYear}
