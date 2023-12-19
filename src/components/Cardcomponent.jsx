@@ -29,7 +29,7 @@ export default function Cardcomponent({
         /> */}
         <div
           className=" absolute top-[47%] left-[6%] w-[287px] h-[157px] 
-        bg-[url('/Users/mac/interactive-card/src/assets/bg-card-front.png')]
+        bg-[url('./assets/bg-card-front.png')]
         pt-[84px] pl-[19px] rounded-[6px] "
         >
           <span className=" text-[18px] text-white tracking-[2.2px] ">
