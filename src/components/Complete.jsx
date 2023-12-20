@@ -1,7 +1,7 @@
 import React from "react";
 import pathImage from "../assets/Path.png";
 
-export default function Complete({ complete }) {
+export default function Complete() {
   const handleRefresh = () => {
     window.location.reload();
   };

@@ -12,8 +12,6 @@ export default function Cardcomponent({
   return (
     <div>
       <div className=" flex relative w-[375px] h-[240px] bg-[url('./assets/bg-main-mobile.png')] md:bg-[url('./assets/bg-main-desktop.png')] md:w-[483px] md:min-h-[100vh]">
-        {/* <img src={bgmobileImage} alt="" /> */}
-
         <div className=" w-[20px] h-[11px] absolute top-[40%] z-50 left-[78%] pl-[2px] text-white text-[9px] md:top-[63%] md:left-[125%] md:tracking-[2px] md:text-[14px] ">
           {cvv}
         </div>
@@ -22,11 +20,7 @@ export default function Cardcomponent({
           src={cardBackimage}
           alt="cardback"
         />
-        {/* <img
-          className=" absolute top-[47%] left-[6%] w-[287px] h-[157px]"
-          src={carFrontimage}
-          alt="cardfront"
-        /> */}
+
         <div
           className=" absolute top-[47%] left-[6%] w-[287px] h-[157px] 
         bg-[url('./assets/bg-card-front.png')]
