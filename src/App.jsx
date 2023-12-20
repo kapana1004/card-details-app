@@ -106,7 +106,7 @@ function App() {
   };
 
   return (
-    <div className=" flex justify-center items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] ">
+    <div className=" flex justify-center items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] md:flex-row md:gap-[349px]">
       <Cardcomponent
         cardFrontNum={cardFrontNum}
         holderName={holderName}
@@ -118,11 +118,13 @@ function App() {
 
       <div
         className={
-          hideDetails ? " hidden" : ` bg-white w-[375px] h-[704px] pl-[20px]`
+          hideDetails
+            ? " hidden"
+            : ` bg-white w-[375px] h-[704px] pl-[20px] md:pt-[130px]`
         }
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
+          <div className="mb-3 flex flex-col">
             <label htmlFor="nameOnCard" className="form-label flex flex-col">
               CARDHOLDER NAME
               <input
