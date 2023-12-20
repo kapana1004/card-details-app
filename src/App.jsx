@@ -104,7 +104,7 @@ function App() {
   };
 
   return (
-    <div className=" flex justify-center items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] md:flex-row md:gap-[349px]">
+    <div className=" flex items-center flex-col gap-[91px] min-h-[100vh] min-w-[100vw] md:flex-row md:gap-[349px]">
       <Cardcomponent
         cardFrontNum={cardFrontNum}
         holderName={holderName}
